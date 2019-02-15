@@ -34,7 +34,7 @@ router.post('/login',(req,res)=>{
             userName:doc.userName
           }
         })
-      }else{
+      }else{ 
         res.json({
           status:'1',
           msg:'you have a mistake on username or password',
