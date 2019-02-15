@@ -17,8 +17,8 @@ npm run build --report
 这里的server本应是一个单独的项目，将其放到了shop下，共用一个package.json
 
 ``` bash
-#导入collection到数据库
-mongoimport -d db_shop -c goods --file C:\Users\wangwensheng\Desktop\shop\server\db\dumall-goods
+#导入所有的collection到数据库
+mongoimport -d db_shop -c goods --file C:\Users\wangwensheng\Desktop\shop\server\db\shop-goods
 
 #启动服务器
 cd C:\Users\wangwensheng\Desktop\shop\server\bin>

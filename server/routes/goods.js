@@ -1,7 +1,7 @@
 let express = require('express');
 let router = express.Router();
 let mongoose = require('mongoose');
-const url = 'mongodb://root:123456@localhost:27017/db_shop'
+const url = 'mongodb://@localhost:27017/db_shop'
 let Goods = require('../models/goods')
 //连接mongoDB数据库
 mongoose.connect(url,(err) =>{
