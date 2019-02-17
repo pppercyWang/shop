@@ -20,6 +20,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+//一定要注意拦截器放置的位置，中间件的后面，一级路由的前面
 app.use(function(req,res,next){
   if(req.cookies.userId){
     next()

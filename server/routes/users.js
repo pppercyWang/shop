@@ -71,4 +71,49 @@ router.get('/checkLogin',(req,res)=>{
     })
   }
 })
+//查询用户名下的购物车数据
+router.get('/cartList',(req,res,next)=>{
+  //req.cookies用来读，res.cookies()用来写
+  let userId = req.cookies.userId;  //这里不需要判断cookies中有无userID，假如没有的话，肯定会拦截下来
+  User.findOne({userId:userId},(err,doc)=>{
+    if(err){
+      res.json({
+        status:'1',
+        msg:err.message
+      })
+    }else{
+      if(doc){
+        res.json({
+          status:'0',
+          msg:'',
+          result:doc.cartList
+        })
+      }
+    }
+  })
+})
+//删除购物车项
+router.post('/cart/del',(req,res,next)=>{
+  let userId = req.cookies.userId
+  let productId = req.body.productId
+  User.update({userId:userId},{$pull:{
+    'cartList':{
+      'productId':productId
+    }
+  }},(err,doc)=>{
+    if(err){
+      res.json({
+        status:'1',
+        msg:err.message,
+        result:''
+      })
+    }else{
+      res.json({
+        status:'0',
+        msg:'',
+        result:'suc'
+      })
+    }
+  })
+})
 module.exports = router;

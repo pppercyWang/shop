@@ -61,7 +61,6 @@
       </modal>
       <modal v-bind:mdShow="mdSucAddFlag" v-on:close="closeModal">
         <p slot="message">
-          
           <span>添加成功</span>
         </p>
         <div slot="btnGroup">
