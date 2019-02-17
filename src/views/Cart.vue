@@ -62,7 +62,7 @@
               <li v-for="item in cartList" v-bind:key="item._id">
                 <div class="cart-tab-1">
                   <div class="cart-item-check">
-                    <a href="javascipt:;" class="checkbox-btn item-check-btn">
+                    <a href="javascipt:;" class="checkbox-btn item-check-btn" v-bind:class="{'check':item.checked=='1'}" @click="editCart('checked',item)">
                       <svg class="icon icon-ok">
                         <use xlink:href="#icon-ok"></use>
                       </svg>
@@ -76,21 +76,21 @@
                   </div>
                 </div>
                 <div class="cart-tab-2">
-                  <div class="item-price">{{item.salePrice}}</div>
+                  <div class="item-price">{{item.salePrice | currency('$')}}</div>
                 </div>
                 <div class="cart-tab-3">
                   <div class="item-quantity">
                     <div class="select-self select-self-open">
                       <div class="select-self-area">
-                        <a class="input-sub">-</a>
-                        <span class="select-ipt">{{item.productNum}}</span>
-                        <a class="input-add">+</a>
+                        <a class="input-sub" @click="editCart('minus',item)">-</a>
+                        <span class="select-ipt" >{{item.productNum}}</span>
+                        <a class="input-add" @click="editCart('plus',item)">+</a>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div class="cart-tab-4">
-                  <div class="item-price-total">{{item.productNum * item.salePrice}}</div>
+                  <div class="item-price-total">{{item.productNum * item.salePrice | currency('$')}}</div>
                 </div>
                 <div class="cart-tab-5">
                   <div class="cart-item-opration">
@@ -109,8 +109,8 @@
           <div class="cart-foot-inner">
             <div class="cart-foot-l">
               <div class="item-all-check">
-                <a href="javascipt:;">
-                  <span class="checkbox-btn item-check-btn">
+                <a href="javascipt:;" @click="toggleCheckAll">
+                  <span class="checkbox-btn item-check-btn" v-bind:class="{'check':checkAllFlag}">
                       <svg class="icon icon-ok"><use xlink:href="#icon-ok"/></svg>
                   </span>
                   <span>Select all</span>
@@ -119,7 +119,7 @@
             </div>
             <div class="cart-foot-r">
               <div class="item-total">
-                Item total: <span class="total-price">500</span>
+                Item total: <span class="total-price">{{totalPrice | currency('$')}}</span>
               </div>
               <div class="btn-wrap">
                 <a class="btn btn--red">Checkout</a>
@@ -174,8 +174,37 @@
             return{
               cartList:[],
               mdConfirm:false,
-              productId:''
+              productId:'',
             }
+        },
+        
+        computed:{
+          //计算属性也可以看成是data中的一个变量，同样可以用this.checkAllFlag拿到值
+          //在computed中定义了，就无需再data中再定义
+          //它是变量而不是函数，它的值是根据一些值的改变而改变的，所以最好不要给计算属性赋值
+          //如果一个计算属性所用到的数据发生了改变，则计算属性也会立即改变
+          checkAllFlag(){
+            return this.cartList.length == this.checkedCount
+          },
+          checkedCount(){
+            let count = 0
+            this.cartList.forEach((item)=>{
+              if(item.checked=='1'){
+                count++
+              }
+            })
+            return count
+          },
+          totalPrice(){
+             let money = 0
+            this.cartList.forEach((item)=>{
+              if(item.checked=='1'){
+                money+= parseInt(item.productNum) * parseFloat(item.salePrice)
+              }
+            })
+            return money
+          }
+
         },
         components:{
           NavHeader,
@@ -207,10 +236,58 @@
               let res = response.data
               if(res.status == '0'){
                 this.mdConfirm = false
-                this.init()
+                this.init()  //这里同样也可以操作this.cartList的值，删除对应的项，就可以避免一次请求
               }
             })
-          }
+          },
+          editCart(flag,item){
+            if(flag=='plus'){
+              item.productNum++
+            }else if(flag=='checked'){
+              if(item.checked == '1'){
+                item.checked = '0'
+              }else{
+                item.checked = '1'
+              }
+            }else{
+              if(item.productNum<=1){
+                return;
+              }
+              item.productNum--
+            }
+            axios.post('users/cart/edit',{
+              'productId':item.productId,
+              'productNum':item.productNum,
+              'checked':item.checked
+            }).then((response)=>{
+              let res = response.data
+              if(res.status=='0'){
+              }
+            })
+
+          },
+          toggleCheckAll(){
+            //计算属性最好不要给它赋值。因为它的值是绑定的
+            let flag = !this.checkAllFlag
+            if(flag){
+              this.cartList.forEach((item)=>{
+              item.checked = '1'
+            })
+            }else{
+              this.cartList.forEach((item)=>{
+              item.checked = '0'
+            })
+            }
+            axios.post('users/cart/checkAll',{
+              'checkAllFlag':flag
+            }).then((response)=>{
+              let res = response.data
+              if(res.status==''){
+              }
+              
+            })
+          },
+          
         }
     }
 </script>

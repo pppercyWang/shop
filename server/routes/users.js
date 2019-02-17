@@ -75,7 +75,7 @@ router.get('/checkLogin',(req,res)=>{
 router.get('/cartList',(req,res,next)=>{
   //req.cookies用来读，res.cookies()用来写
   let userId = req.cookies.userId;  //这里不需要判断cookies中有无userID，假如没有的话，肯定会拦截下来
-  User.findOne({userId:userId},(err,doc)=>{
+  User.findOne({"userId":userId},(err,doc)=>{
     if(err){
       res.json({
         status:'1',
@@ -115,5 +115,73 @@ router.post('/cart/del',(req,res,next)=>{
       })
     }
   })
+})
+//编辑购物车
+router.post('/cart/edit',(req,res,next)=>{
+  let userId = req.cookies.userId
+  let productId = req.body.productId
+  let productNum = req.body.productNum
+  let checked = req.body.checked
+  // User.find({"userId":userId,"cartList.productId":productId},(err,doc)=>{
+    
+  // })
+  //更新子文档使用update()
+  User.update({"userId":userId,"cartList.productId":productId},
+  {
+    "cartList.$.productNum":productNum,
+    "cartList.$.checked":checked
+},
+  (err,doc)=>{
+    if(err){
+      res.json({
+        status:'1',
+        msg:err.message,
+        result:''
+      })
+    }else{
+      res.json({
+        status:'0',
+        msg:'',
+        result:'suc'
+      })
+    }
+  })
+})
+//全选中购物车项
+router.post('/cart/checkAll',(req,res,next)=>{
+  let userId = req.cookies.userId
+  let checkAllFlag = req.body.checkAllFlag?'1':'0'
+  User.findOne({'userId':userId},(err,user)=>{
+    if(err){
+      res.json({
+        status:'1',
+        msg:err.message,
+        result:''
+      })
+    }else{
+      if(user){
+        user.cartList.forEach((item)=>{
+          item.checked = checkAllFlag
+        })
+        user.save((err1,doc)=>{
+          if(err1){
+            res.json({
+              status:'1',
+              msg:err.message,
+              result:''
+            })
+          }else{
+            res.json({
+              status:'0',
+              msg:'',
+              result:'suc'
+            })
+          }
+        })
+      }
+
+    }
+  })
+
 })
 module.exports = router;
