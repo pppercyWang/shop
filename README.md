@@ -1,8 +1,8 @@
-#技术栈
+# 技术栈
 1. 前端： vue.js vue-cli axios webpack
 2. 后端： nodejs/express mongoDB
 
-#各模块介绍
+# 各模块介绍
 1. 商品列表模块  --'server/routes/goods'
 2. 登录登入模块  --'server/routes/users'
 3. 购物车模块    --'server/routes/users'
