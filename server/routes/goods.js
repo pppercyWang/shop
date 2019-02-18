@@ -15,7 +15,6 @@ mongoose.connect(url,(err) =>{
 router.get('/list',(req,res,next)=>{  //二级路由
   let page = parseInt(req.param("page"));  //get请求获得的参数都是字符串
   let pageSize = parseInt(req.param("pageSize"));  
- 
   let skip = (page-1)*pageSize;  //拿到所有goods时，需要跳过的条数
   let sort = parseInt(req.param("sort"));  //sort为1为升序，为-1为降序
   let condition = {}; //mongoose的查询条件都是一个对象
@@ -28,7 +27,7 @@ router.get('/list',(req,res,next)=>{  //二级路由
       case '2':priceGt=500;priceLte=1000;break;
       case '3':priceGt=1000;priceLte=2000;break;
     }
-    condition = {
+    condition = {  
       salePrice:{
         $gt:priceGt,
         $lte:priceLte
@@ -36,7 +35,7 @@ router.get('/list',(req,res,next)=>{  //二级路由
     }
   }
   let goodsModel = Goods.find(condition).skip(skip).limit(pageSize);
-  if(sort!=0){
+  if(sort!=0){  //前端传过来的sort分别为-1，1，0
     goodsModel.sort({'salePrice':sort})
   }
   goodsModel.exec((err,docs)=>{

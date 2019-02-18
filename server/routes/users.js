@@ -122,9 +122,6 @@ router.post('/cart/edit',(req,res,next)=>{
   let productId = req.body.productId
   let productNum = req.body.productNum
   let checked = req.body.checked
-  // User.find({"userId":userId,"cartList.productId":productId},(err,doc)=>{
-    
-  // })
   //更新子文档使用update()
   User.update({"userId":userId,"cartList.productId":productId},
   {
