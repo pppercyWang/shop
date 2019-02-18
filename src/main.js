@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import VueLazyload from 'vue-lazyload'
+//分页组件
 import infiniteScroll from 'vue-infinite-scroll'
 import {currency} from './util/currency'
 // or with options
