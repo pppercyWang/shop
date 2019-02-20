@@ -31,6 +31,43 @@ node www
 
 ## 商品列表的分页，过滤器，及排序实现
 ``` bash
+//前端：
+ getGoodList(flag){
+            let param = {
+              page:this.page,
+              pageSize:this.pageSize,
+              priceLevel:this.priceChecked
+            }
+            if(this.priceSortFlag){
+              param.sort=this.sort?1:-1
+            }else{
+              param.sort=0
+            }
+            this.loading=true
+            axios.get("/goods/list",{
+              params:param
+            }).then((response)=>{
+            let res = response.data
+            if(res.status=='0'){
+              this.loading=false
+              if(flag){
+                this.goodList = this.goodList.concat(res.result.list)
+                if(res.result.count==0){
+                  this.busy=true
+                }else{
+                  this.busy=false
+                }
+              }else{
+                this.goodList = res.result.list;
+                this.busy = false
+              }
+              
+            }else{
+              this.goodList = [];
+            }
+          })
+          }
+//后端：
 router.get('/list',(req,res,next)=>{ 
   let page = parseInt(req.param("page"));  
   let pageSize = parseInt(req.param("pageSize"));  
@@ -142,6 +179,30 @@ app.use(function(req,res,next){
 ```
 ## 购物车模块
 ``` bash
+//前端：通过计算属性实时更新选中框，总价等
+computed:{
+          checkAllFlag(){
+            return this.cartList.length == this.checkedCount
+          },
+          checkedCount(){
+            let count = 0
+            this.cartList.forEach((item)=>{
+              if(item.checked=='1'){
+                count++
+              }
+            })
+            return count
+          },
+          totalPrice(){
+             let money = 0
+            this.cartList.forEach((item)=>{
+              if(item.checked=='1'){
+                money+= parseInt(item.productNum) * parseFloat(item.salePrice)
+              }
+            })
+            return money
+          }
+//后端：编辑功能
 //因为购物车功能只有登录之后才可以使用，所以将它放在users路由中
 router.post('/cart/edit',(req,res,next)=>{
   let userId = req.cookies.userId

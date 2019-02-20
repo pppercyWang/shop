@@ -114,7 +114,7 @@ export default {
                 this.nickName = res.result
               }
             })
-          }
+    }
 
   }
 }
