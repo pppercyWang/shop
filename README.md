@@ -27,6 +27,9 @@ npm run dev
 * 前端： vue.js vue-cli axios webpack
 * 后端： nodejs/express mongoDB
 
+# 效果演示 PC端移动端适配
+![image](https://github.com/pppercyWang/vue-typescript-mobile/blob/master/public/img/demo.gif)
+
 # 各模块路径
 1. 商品列表模块  --'server/routes/goods'
 2. 登录登入模块  --'server/routes/users'
