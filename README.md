@@ -1,21 +1,27 @@
 # shop
 ``` bash
-# install dependencies
+
 npm install
 
-# serve with hot reload at localhost:8080
-npm run dev
 ```
 # server
 *这里的server本应是一个单独的项目，将其放到了shop下，共用一个package.json*
 ``` bash
-#导入所有的collection到数据库
-mongoimport -d db_shop -c goods --file C:\Users\wangwensheng\Desktop\shop\server\db\shop-goods
+#import db数据 在src/db
+mongoimport --host=127.0.0.1 -d db_shop -c goods --file C:\Users\Administrator\Desktop\shop\server\db\shop-goods
 
-#启动服务器
+#启动api服务
 cd C:\Users\wangwensheng\Desktop\shop\server\bin>
 node www
 ```
+
+``` bash
+#启动前端服务
+npm run dev
+
+```
+
+
 # 技术栈
 * 前端： vue.js vue-cli axios webpack
 * 后端： nodejs/express mongoDB
