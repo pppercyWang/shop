@@ -9,25 +9,25 @@ npm install
 mongoimport --host=127.0.0.1 -d db_shop -c goods --file C:\Users\Administrator\Desktop\shop\server\db\shop-goods
 ```
 
-### 启动服务
-## api
+## 启动服务
+### api
 ``` bash
 cd C:\Users\wangwensheng\Desktop\shop\server\bin
 node www
 ```
 
-## 前端
+### 前端
 ``` bash
 cd C:\Users\wangwensheng\Desktop\shop
 npm run dev
 ```
 
 
-# 技术栈
+## 技术栈
 * 前端： vue.js vue-cli axios webpack
 * 后端： nodejs/express mongoDB
 
-# 效果演示 PC端移动端适配
+## 效果演示 PC端移动端适配
 ![image](https://github.com/pppercyWang/shop/blob/master/static/shop.gif)
 
 # 各模块路径
@@ -37,9 +37,9 @@ npm run dev
 4. 拦截器定义    --'server/app.js'
 5. 前端页面  --'src/views'
 6. 前端组件  --'src/components' 
-# 模块具体实现
+## 模块具体实现
 
-## 商品列表的分页，过滤器，及排序实现
+### 商品列表的分页，过滤器，及排序实现
 ``` bash
 //前端：
  getGoodList(flag){
@@ -123,7 +123,7 @@ router.get('/list',(req,res,next)=>{
   })
 })
 ```
-## 登录模块中间件cookieParser的使用
+### 登录模块中间件cookieParser的使用
 ``` bash
 router.post('/login',(req,res)=>{
   let param = {
@@ -164,7 +164,7 @@ router.post('/login',(req,res)=>{
   })
 })
 ```
-## express拦截器的定义
+### express拦截器的定义
 ``` bash
 //一定要注意拦截器放置的位置，中间件的后面，一级路由的前面
 app.use(function(req,res,next){
@@ -187,7 +187,7 @@ app.use(function(req,res,next){
   }
 })
 ```
-## 购物车模块
+### 购物车模块
 ``` bash
 //前端：通过计算属性实时更新选中框，总价等
 computed:{
@@ -242,7 +242,7 @@ router.post('/cart/edit',(req,res,next)=>{
   })
 })
 ```
-## vue的子父通信实现模态框组件
+### vue的子父通信实现模态框组件
 ``` bash
 <template>
     <div>                                                       
