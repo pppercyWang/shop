@@ -1,6 +1,6 @@
 # shop
 ### 安装包
-*这里的server本应是一个单独的服务端api项目，将其放到了shop下，共用一个package.json*
+*这里的server本应是一个独立的服务端api项目，这里将其放到了shop下，共用一个package.json*
 ``` bash
 npm install
 ```
