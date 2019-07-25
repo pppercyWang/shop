@@ -28,15 +28,15 @@ npm run dev
 * 后端： nodejs/express mongoDB
 
 # 效果演示 PC端移动端适配
-![image](https://github.com/pppercyWang/vue-typescript-mobile/blob/master/public/img/demo.gif)
+![image](https://github.com/pppercyWang/shop/blob/master/static/shop.gif)
 
 # 各模块路径
 1. 商品列表模块  --'server/routes/goods'
 2. 登录登入模块  --'server/routes/users'
 3. 购物车模块    --'server/routes/users'
 4. 拦截器定义    --'server/app.js'
-5. 前端页面地址  --'src/views'
-6. 前端组件地址  --'src/components' 
+5. 前端页面  --'src/views'
+6. 前端组件  --'src/components' 
 # 模块具体实现
 
 ## 商品列表的分页，过滤器，及排序实现
