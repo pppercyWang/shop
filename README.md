@@ -1,24 +1,25 @@
 # shop
+### 安装包
+*这里的server本应是一个单独的服务端api项目，将其放到了shop下，共用一个package.json*
 ``` bash
-
 npm install
-
 ```
-# server
-*这里的server本应是一个单独的项目，将其放到了shop下，共用一个package.json*
+### import db数据 在src/db
 ``` bash
-#import db数据 在src/db
 mongoimport --host=127.0.0.1 -d db_shop -c goods --file C:\Users\Administrator\Desktop\shop\server\db\shop-goods
+```
 
-#启动api服务
-cd C:\Users\wangwensheng\Desktop\shop\server\bin>
+### 启动服务
+## api
+``` bash
+cd C:\Users\wangwensheng\Desktop\shop\server\bin
 node www
 ```
 
+## 前端
 ``` bash
-#启动前端服务
+cd C:\Users\wangwensheng\Desktop\shop
 npm run dev
-
 ```
 
 
