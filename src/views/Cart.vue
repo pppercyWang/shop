@@ -2,7 +2,7 @@
   <div>
     <nav-header></nav-header>
     <nav-bread>
-      <a slot="secBread" href="/">Cart</a>
+      <a slot="secBread" href="/">购物车</a>
     </nav-bread>
     <svg style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1"
          xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -45,17 +45,17 @@
     <div class="container">
       <div class="cart">
         <div class="page-title-normal">
-          <h2 class="page-title-h2"><span>My Cart</span></h2>
+          <h2 class="page-title-h2"><span>我的购物车</span></h2>
         </div>
         <div class="item-list-wrap">
           <div class="cart-item">
             <div class="cart-item-head">
               <ul>
-                <li>Items</li>
-                <li>Price</li>
-                <li>Quantity</li>
-                <li>Subtotal</li>
-                <li>Edit</li>
+                <li>产品名称</li>
+                <li>价格</li>
+                <li>数量</li>
+                <li>合计</li>
+                <li>操作</li>
               </ul>
             </div>
             <ul class="cart-item-list">
@@ -113,56 +113,41 @@
                   <span class="checkbox-btn item-check-btn" v-bind:class="{'check':checkAllFlag}">
                       <svg class="icon icon-ok"><use xlink:href="#icon-ok"/></svg>
                   </span>
-                  <span>Select all</span>
+                  <span>全选</span>
                 </a>
               </div>
             </div>
             <div class="cart-foot-r">
               <div class="item-total">
-                Item total: <span class="total-price">{{totalPrice | currency('$')}}</span>
+                总价: <span class="total-price">{{totalPrice | currency('$')}}</span>
               </div>
               <div class="btn-wrap">
-                <a class="btn btn--red">Checkout</a>
+                <a class="btn btn--red" @click="handlePay">结算</a>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <modal :mdShow="mdConfirm" v-on:close="closeModel">
+    <modal :mdShow="mdConfirm" v-on:close="closeModal">
       <p slot="message">你确认要删除此条商品吗</p>
       <div slot="btnGroup">
           <a class="btn btn--m" href="javascript:;" @click="delCart()">确认</a>
           <a class="btn btn--m" href="javascript:;" @click="mdConfirm=false">取消</a>
         </div>
     </modal>
+     <modal :mdShow="mdPaySuc" v-on:close="closeModal">
+        <p slot="message">
+          <span>结算成功</span>
+        </p>
+          <div slot="btnGroup">
+          <a class="btn btn--m" href="javascript:;" @click="mdPaySuc=false">关闭</a>
+        </div>
+      </modal>
     <nav-footer></nav-footer>
   </div>
 </template>
-<style>
-  .input-sub,.input-add{
-    min-width: 40px;
-    height: 100%;
-    border: 0;
-    color: #605F5F;
-    text-align: center;
-    font-size: 16px;
-    overflow: hidden;
-    display: inline-block;
-    background: #f0f0f0;
-  }
-  .item-quantity .select-self-area{
-    background:none;
-    border: 1px solid #f0f0f0;
-  }
-  .item-quantity .select-self-area .select-ipt{
-    display: inline-block;
-    padding:0 3px;
-    width: 30px;
-    min-width: 30px;
-    text-align: center;
-  }
-</style>
+
 <script>
     import NavHeader from '@/components/Header.vue'
     import NavFooter from '@/components/Footer.vue'
@@ -175,6 +160,7 @@
               cartList:[],
               mdConfirm:false,
               productId:'',
+              mdPaySuc: false
             }
         },
         
@@ -216,6 +202,9 @@
           this.init()
         },
         methods:{
+          handlePay() {
+            this.mdPaySuc = true;
+          },
           init(){
             axios.get('/users/cartList').then((response)=>{
               let res = response.data
@@ -226,8 +215,9 @@
             this.productId = productId
             this.mdConfirm = true
           },
-          closeModel(){
+          closeModal(){
             this.mdConfirm = false
+            this.mdPaySuc = false
           },
           delCart(){
             axios.post('users/cart/del',{
@@ -291,3 +281,27 @@
         }
     }
 </script>
+<style>
+  .input-sub,.input-add{
+    min-width: 40px;
+    height: 100%;
+    border: 0;
+    color: #605F5F;
+    text-align: center;
+    font-size: 16px;
+    overflow: hidden;
+    display: inline-block;
+    background: #f0f0f0;
+  }
+  .item-quantity .select-self-area{
+    background:none;
+    border: 1px solid #f0f0f0;
+  }
+  .item-quantity .select-self-area .select-ipt{
+    display: inline-block;
+    padding:0 3px;
+    width: 30px;
+    min-width: 30px;
+    text-align: center;
+  }
+</style>
