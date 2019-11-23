@@ -10,10 +10,10 @@
         </symbol>
         <div class="navbar">
           <div class="navbar-left-container">
+            <img src="../assets/shop_name.jpg" class="navbar-left-container-img">
           </div>
           <div class="navbar-right-container" style="display: flex;">
             <div class="navbar-menu-container">
-              <!--<a href="/" class="navbar-link">我的账户</a>-->
               <span v-if="nickName" v-text="nickName"></span>
               <a href="javascript:void(0)" class="navbar-link" v-if="!nickName" @click="loginModalFlag=true">Login</a>
               <a href="javascript:void(0)" class="navbar-link" v-if="nickName" @click="logout">Logout</a>
@@ -119,3 +119,8 @@ export default {
   }
 }
 </script>
+<style scoped>
+.navbar-left-container-img{
+zoom: .6;
+}
+</style>
