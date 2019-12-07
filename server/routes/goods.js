@@ -22,10 +22,10 @@ router.get('/list',(req,res,next)=>{  //二级路由
   let priceLevel = (req.param("priceLevel"))
   if(priceLevel!='all'){
     switch(priceLevel){
-      case '0':priceGt=0;priceLte=100;break;
-      case '1':priceGt=100;priceLte=500;break;
-      case '2':priceGt=500;priceLte=1000;break;
-      case '3':priceGt=1000;priceLte=2000;break;
+      case '0':priceGt=0;priceLte=20;break;
+      case '1':priceGt=20;priceLte=50;break;
+      case '2':priceGt=50;priceLte=100;break;
+      case '3':priceGt=100;priceLte=500;break;
     }
     condition = {  
       salePrice:{

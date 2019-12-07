@@ -116,22 +116,22 @@ export default {
         {
           id: "00001",
           startPrice: "0.00",
-          endPrice: "100.00"
+          endPrice: "20.00"
         },
         {
           id: "00002",
-          startPrice: "100.00",
-          endPrice: "500.00"
+          startPrice: "20.00",
+          endPrice: "50.00"
         },
         {
           id: "00003",
-          startPrice: "500.00",
-          endPrice: "1000.00"
+          startPrice: "50.00",
+          endPrice: "100.00"
         },
         {
           id: "00004",
-          startPrice: "1000.00",
-          endPrice: "2000.00"
+          startPrice: "100.00",
+          endPrice: "500.00"
         }
       ],
       priceChecked: "all",
@@ -231,7 +231,7 @@ export default {
         this.getGoodList(true);
       }, 500);
     },
-    addCart(productId) {
+    addCart(productId) {  
       axios
         .post("/goods/addCart", {
           productId: productId

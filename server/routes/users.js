@@ -179,6 +179,5 @@ router.post('/cart/checkAll',(req,res,next)=>{
 
     }
   })
-
 })
 module.exports = router;
